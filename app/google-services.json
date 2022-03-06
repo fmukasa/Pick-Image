@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "515310468445",
+    "project_id": "babyapplication-c86a2",
+    "storage_bucket": "babyapplication-c86a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515310468445:android:962830eee9fe0a2851fcb4",
+        "android_client_info": {
+          "package_name": "com.babyapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515310468445-rql01ilnpf36tj49nnm5pa2nhc8tfh4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh1PJ75XW8NGk6COrfFzpi57NU5YAQDJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515310468445-rql01ilnpf36tj49nnm5pa2nhc8tfh4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
