@@ -21,7 +21,7 @@ import com.google.firebase.storage.StorageTask
 import kotlinx.android.synthetic.main.activity_upload.*
 
 class UploadActivity : AppCompatActivity() {
-     //  lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+
     private  var  mImageUri : Uri? = null
     private var mStorage: FirebaseStorage? = null
     private var mStorageRef : StorageReference? = null
@@ -41,6 +41,8 @@ class UploadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
 
+      
+
         button_choose_image = findViewById(R.id.button_choose_image)
         upLoadBtn = findViewById(R.id.upLoadBtn)
 
@@ -51,7 +53,7 @@ class UploadActivity : AppCompatActivity() {
         mStorageRef = FirebaseStorage.getInstance().getReference("teachers_uploads")
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("teachers_uploads")
 
-
+        chooseImageView.setOnClickListener { openFileChooser() }
         button_choose_image.setOnClickListener { openFileChooser() }
         upLoadBtn.setOnClickListener {
             if (mUploadTask != null && mUploadTask!!.isInProgress) {
@@ -77,6 +79,7 @@ class UploadActivity : AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK

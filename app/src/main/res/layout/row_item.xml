@@ -28,6 +28,8 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_launcher_background" />
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +44,7 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name and Contact"
+                android:text="Name of Club"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="normal" />
@@ -53,13 +55,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="About your Event/Business"
+                android:text="About your Club"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
+
         </LinearLayout>
 
     </RelativeLayout>
+
 
 </androidx.cardview.widget.CardView>
