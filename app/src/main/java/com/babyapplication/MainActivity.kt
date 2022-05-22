@@ -6,9 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import com.babyapplication.view.ItemsActivity
 import com.babyapplication.view.UploadActivity
-import com.google.android.gms.ads.*
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 
 class MainActivity : AppCompatActivity() {

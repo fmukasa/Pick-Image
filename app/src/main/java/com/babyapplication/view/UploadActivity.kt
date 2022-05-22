@@ -1,14 +1,17 @@
 package com.babyapplication.view
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import android.provider.MediaStore
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
-import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.babyapplication.MainActivity
 import com.babyapplication.R
@@ -19,6 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import kotlinx.android.synthetic.main.activity_upload.*
+
 
 class UploadActivity : AppCompatActivity() {
 
@@ -41,7 +45,6 @@ class UploadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
 
-      
 
         button_choose_image = findViewById(R.id.button_choose_image)
         upLoadBtn = findViewById(R.id.upLoadBtn)
@@ -49,9 +52,10 @@ class UploadActivity : AppCompatActivity() {
         nameEditText = findViewById(R.id.nameEditText)
         descriptionEditText = findViewById(R.id.descriptionEditText)
         chooseImageView = findViewById(R.id.chooseImageView)
+        
         mStorage = FirebaseStorage.getInstance()
-        mStorageRef = FirebaseStorage.getInstance().getReference("teachers_uploads")
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("teachers_uploads")
+        mStorageRef = FirebaseStorage.getInstance().getReference("TeacherImage")
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Teacher")
 
         chooseImageView.setOnClickListener { openFileChooser() }
         button_choose_image.setOnClickListener { openFileChooser() }
@@ -62,23 +66,47 @@ class UploadActivity : AppCompatActivity() {
             } else {
                 uploadFile()
             }
-
-           /** val getaction = registerForActivityResult(
-                ActivityResultContracts.GetContent().
-                        ActivityResultCallback {uri ->
-                            chooseImageView.setImageURI(uri)
-
-                        })*/
         }
     }
+   // private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+  //  { result: ActivityResult ->
+       // if (result.resultCode == Activity.RESULT_OK) {
+          //  val intent = result.data
+          //  mImageUri = intent!!.data
+          //  chooseImageView.setImageURI(mImageUri)
+            // Handle the Intent
+      //  }
+    //}
+
+   // private val openFileChooserForResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+   // { result: ActivityResult ->
+      //  if (result.resultCode == Activity.RESULT_OK) {
+        //    val intent = result.data
+          //  mImageUri = intent!!.data
+          //  chooseImageView.setImageURI(mImageUri)
+            // handle image from gallery
+       // }
+   // }
+
+    @Suppress("DEPRECATION")
     private fun openFileChooser() {
-        //getaction.launch("image/*")
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
+       // startForResult.launch(intent)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
+       //  openFileChooserForResultLauncher.launch(intent)
     }
 
+   // private fun openFileChooser() {
+      //  val pickIntent = Intent(Intent.ACTION_GET_CONTENT)
+          //   pickIntent.setDataAndType(
+            // MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+            // openFileChooserForResultLauncher.launch(pickIntent)
+  // }
+
+
+    @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -88,6 +116,7 @@ class UploadActivity : AppCompatActivity() {
             chooseImageView.setImageURI(mImageUri)
         }
     }
+
     private fun getFileExtension(uri : Uri):String? {
         val cR = contentResolver
         val mime = MimeTypeMap.getSingleton()
@@ -102,8 +131,7 @@ class UploadActivity : AppCompatActivity() {
             progressBar.isIndeterminate = true
             mUploadTask = fileReference.putFile(mImageUri!!)
                 .addOnSuccessListener {
-                    val handler = Handler()
-                    handler.postDelayed(
+                    Handler(Looper.getMainLooper()).postDelayed(
                         {
                             progressBar.visibility = View.VISIBLE
                             progressBar.isIndeterminate = false

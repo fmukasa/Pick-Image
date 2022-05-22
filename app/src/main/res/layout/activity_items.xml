@@ -16,6 +16,7 @@
         android:indeterminateBehavior="cycle"
         android:visibility="gone"/>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"

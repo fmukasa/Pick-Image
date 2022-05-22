@@ -8,6 +8,7 @@ import android.system.Os.remove
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_items.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,15 +30,19 @@ class ItemsActivity : AppCompatActivity() {
 
     private var mStorage: FirebaseStorage? = null
     private var mDatabaseRef: DatabaseReference? = null
+    private var mStorageRef : StorageReference? = null
     private var mDBListener: ValueEventListener? = null
     private lateinit var mTeachers: MutableList<Teacher>
     private lateinit var listAdapter: ListAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var myDataLoaderProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_items)
 
-
+        myDataLoaderProgressBar= findViewById(R.id.myDataLoaderProgressBar)
+        mRecyclerView=findViewById(R.id.mRecyclerView)
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(this@ItemsActivity)
         myDataLoaderProgressBar.visibility = View.VISIBLE
@@ -45,7 +51,8 @@ class ItemsActivity : AppCompatActivity() {
         mRecyclerView.adapter = listAdapter
 
         mStorage = FirebaseStorage.getInstance()
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("teachers_uploads")
+        mStorageRef = FirebaseStorage.getInstance().getReference("TeacherImage")
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Teacher")
         mDBListener = mDatabaseRef!!.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@ItemsActivity,error.message, Toast.LENGTH_SHORT).show()
@@ -70,6 +77,7 @@ class ItemsActivity : AppCompatActivity() {
         super.onDestroy()
         mDatabaseRef!!.removeEventListener(mDBListener!!)
     }
+
 
 
 
